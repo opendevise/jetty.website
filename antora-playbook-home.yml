@@ -1,4 +1,7 @@
-# npx antora antora-playbook.yml
+# npx antora antora-playbook-home.yml
+antora:
+  extensions:
+  - ./lib/noindex-extension.js
 site:
   title: Eclipse Jetty
   url: https://jetty.org
@@ -6,10 +9,7 @@ content:
   sources:
   - url: .
     branches: HEAD
-    start_paths: [home, contribution-guide]
-  - url: https://github.com/opendevise/jetty.project
-    branches: jetty-12.0.x-for-antora
-    start_path: documentation/jetty-docs
+    start_path: home
 asciidoc:
   attributes:
     experimental: ''

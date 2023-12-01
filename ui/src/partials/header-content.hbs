@@ -1,8 +1,8 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item logo" href="{{or site.url siteRootPath}}"><img src="{{{uiRootPath}}}/img/jetty-logo.svg" alt="{{site.title}}" width="120"></a>
-      <a class="navbar-item" href="{{{or site.url siteRootPath}}}">{{site.title}}</a>
+      <a class="navbar-item logo" href="{{or page.attributes.home-site-url site.url siteRootPath}}"><img src="{{{uiRootPath}}}/img/jetty-logo.svg" alt="{{site.title}}" width="120"></a>
+      <a class="navbar-item" href="{{{or page.attributes.home-site-url site.url siteRootPath}}}">{{site.title}}</a>
       <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
         <span></span>
         <span></span>
@@ -14,15 +14,23 @@
         {{#if env.SITE_SEARCH_PROVIDER}}
         <div class="navbar-item search hide-for-print">
           <div id="search-field" class="field">
-            <input id="search-input" type="text" placeholder="Search the docs"{{#if page.home}} autofocus{{/if}}>
+            <input id="search-input" type="text" placeholder="Search the docs"{{#if (and page.home (not site.path))}} autofocus{{/if}}>
           </div>
         </div>
         {{/if}}
-        <a class="navbar-item" href="{{{relativize (resolvePageURL 'ROOT::documentation.adoc')}}}">Documentation</a>
+        {{#with page.attributes.home-site-url}}
+        <a class="navbar-item" href="{{{relativize (resolvePageURL 'ROOT::index.adoc')}}}">Documentation</a>
+        <a class="navbar-item" href="{{{this}}}/support.html">Support</a>
+        <a class="navbar-item" href="{{{this}}}/community.html">Community</a>
+        <a class="navbar-item" href="{{{this}}}/security.html">Security</a>
+        <a class="navbar-item" href="{{{this}}}/download.html">Download</a>
+        {{else}}
+        <a class="navbar-item" href="{{{relativize (resolvePageURL 'ROOT::docs/index.adoc')}}}">Documentation</a>
         <a class="navbar-item" href="{{{relativize (resolvePageURL 'ROOT::support.adoc')}}}">Support</a>
         <a class="navbar-item" href="{{{relativize (resolvePageURL 'ROOT::community.adoc')}}}">Community</a>
         <a class="navbar-item" href="{{{relativize (resolvePageURL 'ROOT::security.adoc')}}}">Security</a>
         <a class="navbar-item" href="{{{relativize (resolvePageURL 'ROOT::download.adoc')}}}">Download</a>
+        {{/with}}
       </div>
     </div>
   </nav>
